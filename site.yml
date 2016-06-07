@@ -1,0 +1,27 @@
+--- # OpenWRT Entry point
+- hosts: all
+  user: root
+  tasks:
+    - name: Install needed packages
+      opkg: name={{ item }} state=present
+      with_items:
+        - ca-certificates
+
+    - name: Install SSH key
+      authorized_key:
+        user: root
+        key: https://github.com/rtgibbons.keys
+        path: /etc/dropbear/authorized_keys
+        exclusive: yes
+
+    # This should be most of them, but will need to verify on next clean install
+    - name: Removign Wireless userland
+      opkg: name={{ item }} state=absent
+      with_items:
+        - kmod-mwlwifi
+        - kmod-mac80211
+        - iw
+        - iwinfo
+        - libiwinfo
+        - hostapd-common
+

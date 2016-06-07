@@ -1,0 +1,10 @@
+--- # OpenWRT setup
+- hosts: all
+  user: root
+  gather_facts: no
+  tasks:
+  - raw: opkg update
+  - raw: opkg install python-light
+  - raw: opkg install python-codecs
+  - raw: opkg install python-logging
+  - raw: opkg install python-crypto
